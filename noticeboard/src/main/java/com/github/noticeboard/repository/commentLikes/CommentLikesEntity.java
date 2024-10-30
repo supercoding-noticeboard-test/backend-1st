@@ -16,8 +16,9 @@ import java.time.LocalDateTime;
 @Table(name = "comment_likes")
 public class CommentLikesEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_like_id")
     private Integer commentLikesId;
 
     @Column(name = "comment_id")

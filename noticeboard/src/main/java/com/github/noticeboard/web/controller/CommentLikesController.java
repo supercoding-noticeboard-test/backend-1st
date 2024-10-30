@@ -14,8 +14,17 @@ public class CommentLikesController {
 
     @PostMapping("/comment-likes")
     public String addCommentLike(@RequestBody Like like) {
-        commentLikesService.addLike(like);
-        return like.getUserId() + " 유저가 " + like.getCommentId() + " 댓글에 좋아요를 눌렀습니다.";
+
+        String respone = commentLikesService.addLike(like);
+        return respone;
+    }
+
+    @DeleteMapping("/comment-likes")
+    public String removeCommentLike(@RequestBody Like like) {
+        Integer commentId = like.getCommentId();
+        Integer userId = like.getUserId();
+        commentLikesService.deleteLike(like);
+        return userId + " 유저가 " + commentId + " 댓글에 좋아요를 취소하였습니다.";
     }
 
 }

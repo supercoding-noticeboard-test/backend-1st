@@ -1,6 +1,9 @@
 package com.github.noticeboard.config;
 
+import com.github.noticeboard.properties.DataSourceProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -16,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@EnableConfigurationProperties(DataSourceProperties.class)
+@RequiredArgsConstructor
 @EnableJpaRepositories(
         basePackages = {"com.github.noticeboard.repository.commentLikes"},
         entityManagerFactoryRef = "entityManagerFactoryBean1",
@@ -23,14 +28,16 @@ import java.util.Map;
 )
 public class JpaConfig {
 
+    private final DataSourceProperties dataSourceProperties;
+
     @Bean
     public javax.sql.DataSource dataSource1() {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUsername("root");
-        dataSource.setPassword("wlsus2847!!");
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/noticeboard?useUnicode=true&characterEncoding=UTF-8");
+        dataSource.setUsername(dataSourceProperties.getUsername());
+        dataSource.setPassword(dataSourceProperties.getPassword());
+        dataSource.setDriverClassName(dataSourceProperties.getDriverClassName());
+        dataSource.setUrl(dataSourceProperties.getUrl());
         return dataSource;
 
     }
@@ -46,6 +53,7 @@ public class JpaConfig {
         em.setJpaVendorAdapter(vendorAdapter);
 
         Map<String, Object> properties = new HashMap<>();
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         properties.put("hibernate.format_sql", "true");
         properties.put("hibernate.use_sql_comment", "true");
 
