@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Like {
+public class LikeBody {
 
     private Integer commentId;
     private Integer userId;

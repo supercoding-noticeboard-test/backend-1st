@@ -1,5 +1,6 @@
 package com.github.noticeboard.repository.commentLikes;
 
+import com.github.noticeboard.web.dto.LikeBody;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,5 +30,12 @@ public class CommentLikesEntity {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public void setLike(LikeBody likeBody) {
+
+        this.commentId = likeBody.getCommentId();
+        this.userId = likeBody.getUserId();
+
+    }
 
 }

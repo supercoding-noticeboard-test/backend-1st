@@ -22,7 +22,8 @@ import java.util.Map;
 @EnableConfigurationProperties(DataSourceProperties.class)
 @RequiredArgsConstructor
 @EnableJpaRepositories(
-        basePackages = {"com.github.noticeboard.repository.commentLikes"},
+        basePackages = {"com.github.noticeboard.repository.commentLikes", "com.github.noticeboard.repository.post", "com.github.noticeboard.repository.comment",
+                "com.github.noticeboard.repository.user"},
         entityManagerFactoryRef = "entityManagerFactoryBean1",
         transactionManagerRef = "tmJpa1"
 )
@@ -31,7 +32,7 @@ public class JpaConfig {
     private final DataSourceProperties dataSourceProperties;
 
     @Bean
-    public javax.sql.DataSource dataSource1() {
+    public DataSource dataSource1() {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUsername(dataSourceProperties.getUsername());
@@ -47,7 +48,8 @@ public class JpaConfig {
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.github.noticeboard.repository.commentLikes");
+        em.setPackagesToScan("com.github.noticeboard.repository.commentLikes", "com.github.noticeboard.repository.post", "com.github.noticeboard.repository.comment",
+                            "com.github.noticeboard.repository.user");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

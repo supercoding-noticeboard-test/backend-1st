@@ -1,2 +1,12 @@
 server:
   port: 8080
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+datasource:
+  username: ${DB_USERNAME}
+  password: ${DB_PASSWORD}
+  url: ${DB_URL}
+  driver-class-name: ${DB_CLASSNAME}
