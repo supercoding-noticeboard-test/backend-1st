@@ -3,7 +3,7 @@ package com.github.noticeboard.service;
 import com.github.noticeboard.repository.commentLikes.CommentLikesEntity;
 import com.github.noticeboard.repository.commentLikes.CommentLikesRepository;
 import com.github.noticeboard.service.mapper.CommentLikesMapper;
-import com.github.noticeboard.web.dto.LikeBody;
+import com.github.noticeboard.web.dto.like.LikeBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,8 +35,6 @@ public class CommentLikesService {
     public String deleteLike(LikeBody likeBody) {
         Optional<CommentLikesEntity> cle = commentLikesRepository.findByUserIdAndCommentId(likeBody.getUserId(), likeBody.getCommentId());
         if (cle.isPresent()) {
-//            CommentLikesEntity commentLikesEntity = CommentLikesMapper.INSTANCE.LikeBodyToCommentLikesEntity(like);
-
             commentLikesRepository.deleteById(cle.get().getCommentLikesId());
             return cle.get().getUserId() + " 유저가 " + cle.get().getCommentId() + " 댓글에 좋아요 취소를 눌렀습니다.";
         } else {

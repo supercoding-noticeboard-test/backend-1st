@@ -1,7 +1,7 @@
 package com.github.noticeboard.service.mapper;
 
 import com.github.noticeboard.repository.commentLikes.CommentLikesEntity;
-import com.github.noticeboard.web.dto.LikeBody;
+import com.github.noticeboard.web.dto.like.LikeBody;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

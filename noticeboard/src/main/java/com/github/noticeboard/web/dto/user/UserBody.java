@@ -1,4 +1,4 @@
-package com.github.noticeboard.web.dto;
+package com.github.noticeboard.web.dto.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

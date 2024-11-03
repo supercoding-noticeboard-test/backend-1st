@@ -1,6 +1,6 @@
 package com.github.noticeboard.repository.commentLikes;
 
-import com.github.noticeboard.web.dto.LikeBody;
+import com.github.noticeboard.web.dto.like.LikeBody;
 import jakarta.persistence.*;
 import lombok.*;
 

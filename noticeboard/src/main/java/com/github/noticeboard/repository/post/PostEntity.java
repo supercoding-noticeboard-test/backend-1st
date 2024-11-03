@@ -1,7 +1,6 @@
 package com.github.noticeboard.repository.post;
 
 import com.github.noticeboard.repository.user.UserEntity;
-import com.github.noticeboard.web.dto.PostBody;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +22,9 @@ public class PostEntity {
     @Column(name = "post_id")
     private Integer postId;
 
+    @Column(name = "user_id")
+    private Integer userId;
+
     @Column(name = "title")
     private String title;
 
@@ -32,7 +34,5 @@ public class PostEntity {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "user_id")
-    private Integer userId;
 
 }

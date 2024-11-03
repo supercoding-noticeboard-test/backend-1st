@@ -1,7 +1,7 @@
 package com.github.noticeboard.web.controller;
 
 import com.github.noticeboard.service.CommentLikesService;
-import com.github.noticeboard.web.dto.LikeBody;
+import com.github.noticeboard.web.dto.like.LikeBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
