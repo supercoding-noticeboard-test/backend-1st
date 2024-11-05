@@ -1,6 +1,5 @@
 package com.github.noticeboard.repository.post;
 
-import com.github.noticeboard.repository.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

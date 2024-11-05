@@ -1,4 +1,4 @@
-package com.github.noticeboard.web.dto.like;
+package com.github.noticeboard.web.dto.comment;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -9,9 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class LikeBody {
+public class CommentBody {
 
-    private Integer commentId;
-    private Integer userId;
+    private Integer postId;
+    private String content;
+    private String author;
 
 }

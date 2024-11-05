@@ -19,9 +19,7 @@ public class PostController {
 
     @PostMapping("/post")
     public String writePost(@RequestBody PostBody postBody) {
-        String respone = postService.createPost(postBody);
-
-        return respone;
+        return postService.createPost(postBody);
     }
 
     @GetMapping("/posts/search")
@@ -40,4 +38,8 @@ public class PostController {
         return postService.updatePost(postId, postBody);
     }
 
+    @DeleteMapping("/posts/{post_id}")
+    public String deletedPost(@PathVariable("post_id") Integer postId) {
+        return postService.deletePost(postId);
+    }
 }

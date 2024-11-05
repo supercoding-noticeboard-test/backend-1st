@@ -49,6 +49,7 @@ public class PostService {
                 .toList();
     }
 
+    @Transactional("tmJpa1")
     public PostUpdateBody updatePost(Integer postId, PostUpdateBody postBody) {
         LocalDateTime date = LocalDateTime.now();
         PostEntity post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("포스트를 찾을 수 없습니다."));
@@ -57,5 +58,11 @@ public class PostService {
         post.setCreatedAt(date);
         postRepository.save(post);
         return postBody;
+    }
+
+    @Transactional("tmJpa1")
+    public String deletePost(Integer postId) {
+        postRepository.deleteById(postId);
+        return "게시물이 삭제되었습니다.";
     }
 }
