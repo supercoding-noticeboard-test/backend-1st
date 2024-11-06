@@ -7,6 +7,7 @@ import com.github.noticeboard.repository.user.UserRepository;
 import com.github.noticeboard.service.mapper.CommentMapper;
 import com.github.noticeboard.web.dto.comment.CommentBody;
 import com.github.noticeboard.web.dto.comment.CommentResponse;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +27,10 @@ public class CommentService {
     @Transactional("tmJpa1")
     public String createComment(CommentBody commentBody) {
         LocalDateTime date = LocalDateTime.now();
-        UserEntity user = userRepository.findByEmail(commentBody.getAuthor());
+        Optional<UserEntity> user = Optional.ofNullable(userRepository.findByEmail(commentBody.getAuthor())
+                .orElseThrow(() -> new EntityNotFoundException("댓글 작성 도중 오류가 발생하였습니다.")));
 
-        CommentEntity commentEntity = CommentMapper.INSTANCE.commentBodytoCommentEntity(commentBody, user.getUserId());
+        CommentEntity commentEntity = CommentMapper.INSTANCE.commentBodytoCommentEntity(commentBody, user.get().getUserId());
         commentEntity.setCreatedAt(date);
         commentRepository.save(commentEntity);
         return "댓글이 성공적으로 작성되었습니다.";
@@ -51,5 +53,17 @@ public class CommentService {
         return foundCommentAll.stream()
                 .map((Object comment) -> CommentResponse.from((CommentEntity) comment, userRepository.findById(((CommentEntity) comment).getUserId())))
                 .toList();
+    }
+
+    public String deleteComment(Integer commentId) {
+
+        Optional<CommentEntity> commentEntity = commentRepository.findById(commentId);
+        if (commentEntity.isPresent()) {
+            commentRepository.deleteById(commentId);
+            return "댓글이 삭제되었습니다.";
+        } else {
+            throw new NoSuchElementException();
+        }
+
     }
 }

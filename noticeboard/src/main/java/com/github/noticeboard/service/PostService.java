@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,20 +26,22 @@ public class PostService {
 
     @Transactional("tmJpa1")
     public String createPost(PostBody postBody) {
-        UserEntity user = userRepository.findByEmail(postBody.getAuthor());
+        Optional<UserEntity> user = Optional.ofNullable(userRepository.findByEmail(postBody.getAuthor())
+                .orElseThrow(() -> new EntityNotFoundException("포스트 작성 중 오류가 발생하였습니다.")));
         LocalDateTime date = LocalDateTime.now();
-        PostEntity post = PostMapper.INSTANCE.idAndPostBodytoPostEntity(postBody, user.getUserId());
+        PostEntity post = PostMapper.INSTANCE.idAndPostBodytoPostEntity(postBody, user.get().getUserId());
         post.setCreatedAt(date);
 
         postRepository.save(post);
         return "게시물이 정상적으로 작성되었습니다.";
     }
 
-    public List<PostResponse> getPostsByEmail(String author) {
-        UserEntity user = userRepository.findByEmail(author);
-        List<PostEntity> foundByEmail = postRepository.findAllPostById(user.getUserId());
+    public List<PostResponse> getPostsByEmail(String email) {
+        Optional<UserEntity> user = Optional.ofNullable(userRepository.findByEmail(email))
+                .orElseThrow(() -> new EntityNotFoundException(email + " 유저를 찾을 수 없습니다."));
+        List<PostEntity> foundByEmail = postRepository.findAllPostById(user.get().getUserId());
         return foundByEmail.stream()
-                .map((Object post) -> PostResponse.from((PostEntity) post, author))
+                .map((Object post) -> PostResponse.from((PostEntity) post, email))
                 .toList();
     }
 

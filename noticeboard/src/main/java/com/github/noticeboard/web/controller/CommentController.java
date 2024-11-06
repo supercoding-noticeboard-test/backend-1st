@@ -20,14 +20,19 @@ public class CommentController {
         return commentService.createComment(commentBody);
     }
 
-    @PutMapping("/comments/{comment_id}")
-    public String updatedComment(@PathVariable Integer comment_id, @RequestBody CommentBody commentBody) {
-        return commentService.updateComment(comment_id, commentBody);
+    @PutMapping("/comments/{commentId}")
+    public String updatedComment(@PathVariable Integer commentId, @RequestBody CommentBody commentBody) {
+        return commentService.updateComment(commentId, commentBody);
     }
 
     @GetMapping("/comments")
     public List<CommentResponse> getAllComments() {
         return commentService.getCommentsAll();
+    }
+
+    @DeleteMapping("/comments/{commentId}")
+    public String deleteComment(@PathVariable Integer commentId) {
+        return commentService.deleteComment(commentId);
     }
 
 }
