@@ -11,7 +11,7 @@ public interface PostMapper {
 
     PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
 
-//    @Mapping(target = "userId", source = "userId")
+    @Mapping(target = "userId", source = "userId")
     PostEntity idAndPostBodytoPostEntity(PostBody postBody, Integer userId);
 
 }
